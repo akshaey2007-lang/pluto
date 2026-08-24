@@ -54,8 +54,7 @@ export default function Home() {
     <main>
       <nav className="nav shell" aria-label="Main navigation">
         <a className="brand" href="#top" aria-label="Pluto home">
-          <span className="brand-mark"><span /></span>
-          PLUTO
+          <span className="logo-crop"><img src="/pluto-logo.png" alt="Pluto" /></span>
         </a>
         <div className="nav-links">
           <a href="#how">How it works</a>
@@ -98,7 +97,7 @@ export default function Home() {
 
           <section className="app-window">
             <div className="app-topbar">
-              <div className="mini-brand"><span className="brand-mark small"><span /></span> PLUTO</div>
+              <div className="mini-brand"><span className="logo-crop small"><img src="/pluto-logo.png" alt="Pluto" /></span></div>
               <div className="window-tabs">
                 <button className={view === 'talent' ? 'active' : ''} onClick={() => setView('talent')}>Talent view</button>
                 <button className={view === 'client' ? 'active' : ''} onClick={() => setView('client')}>Client view</button>
@@ -227,7 +226,7 @@ export default function Home() {
       </section>
 
       <footer>
-        <div className="shell footer-grid"><div><a className="brand footer-brand" href="#top"><span className="brand-mark"><span /></span>PLUTO</a><p>Fair work, in orbit.</p></div><div><span>PLATFORM</span><a href="#opportunities">Find work</a><a href="#top">Hire talent</a><a href="#safety">Pluto Protect</a></div><div><span>COMPANY</span><a href="#how">About</a><a href="#how">Manifesto</a><a href="#opportunities">Careers</a></div><div><span>FOLLOW</span><a href="#">LinkedIn ↗</a><a href="#">Instagram ↗</a><a href="#">X / Twitter ↗</a></div></div>
+        <div className="shell footer-grid"><div><a className="brand footer-brand" href="#top"><span className="logo-crop footer-logo"><img src="/pluto-logo.png" alt="Pluto" /></span></a><p>Fair work, in orbit.</p></div><div><span>PLATFORM</span><a href="#opportunities">Find work</a><a href="#top">Hire talent</a><a href="#safety">Pluto Protect</a></div><div><span>COMPANY</span><a href="#how">About</a><a href="#how">Manifesto</a><a href="#opportunities">Careers</a></div><div><span>FOLLOW</span><a href="#">LinkedIn ↗</a><a href="#">Instagram ↗</a><a href="#">X / Twitter ↗</a></div></div>
         <div className="shell footer-bottom"><span>© 2026 PLUTO MARKETPLACE</span><div><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Accessibility</a></div><span>MADE FOR INDEPENDENTS</span></div>
       </footer>
 
