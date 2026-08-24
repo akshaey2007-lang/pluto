@@ -16,7 +16,7 @@ body { background: #111218; color: #f7f7f8; }
 .nav-links a { font: 600 12px var(--font-dm); text-transform: none; letter-spacing: 0; color: #a9adb7; }
 .nav-cta { background: #f4f4f5; color: #14151a; border-color: #f4f4f5; text-transform: none; font: 700 12px var(--font-dm); }
 .nav-cta:hover { background: #8b5cf6; border-color: #8b5cf6; color: white; }
-.logo-crop { background: #000; }
+.logo-crop { background: transparent; }
 
 .hero { min-height: 720px; grid-template-columns: .92fr 1.08fr; padding-block: 78px 88px; }
 .hero:before { display: none; }

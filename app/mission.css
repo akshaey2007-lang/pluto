@@ -25,26 +25,25 @@ main { overflow: hidden; }
 }
 .brand { color: #fff; letter-spacing: .18em; }
 .logo-crop {
-  display: block;
-  position: relative;
+  display: flex;
+  align-items: center;
   width: 116px;
   height: 48px;
-  overflow: hidden;
+  overflow: visible;
   flex: 0 0 auto;
-  background: #000;
+  background: transparent;
 }
 .logo-crop img {
-  position: absolute;
-  width: 347px;
-  max-width: none;
+  position: static;
+  display: block;
+  width: 100%;
+  max-width: 100%;
   height: auto;
-  left: -122px;
-  top: -104px;
 }
 .logo-crop.small { width: 72px; height: 28px; }
-.logo-crop.small img { width: 220px; left: -77px; top: -65px; }
+.logo-crop.small img { width: 100%; }
 .logo-crop.footer-logo { width: 128px; height: 54px; }
-.logo-crop.footer-logo img { width: 400px; left: -140px; top: -120px; }
+.logo-crop.footer-logo img { width: 100%; }
 .brand-mark { border-color: var(--acid); border-radius: 3px; transform: rotate(45deg); }
 .brand-mark:after { border-color: var(--signal); border-radius: 2px; transform: rotate(45deg); }
 .brand-mark span { background: #fff; }
