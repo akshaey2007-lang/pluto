@@ -68,23 +68,23 @@ export default function Home() {
 
       <section className="hero shell" id="top">
         <div className="hero-copy">
-          <div className="eyebrow"><i /> FAIR WORK, IN ORBIT</div>
-          <h1>Great work<br />should cost <em>talent,</em><br /><span>not tokens.</span></h1>
+          <div className="eyebrow"><i /> A FAIRER FREELANCE MARKETPLACE</div>
+          <h1>Independent work,<br /><em>built on</em> <span>trust.</span></h1>
           <p className="hero-intro">
-            Pluto connects serious clients with independent talent. No paid bids. No hidden cuts.
-            Just protected work and your full quoted price.
+            Pluto helps verified clients and skilled freelancers work through clear milestones,
+            protected payments, and transparent fees.
           </p>
           <div className="hero-actions">
             <button className="primary" onClick={() => document.getElementById('opportunities')?.scrollIntoView({ behavior: 'smooth' })}>
-              Explore opportunities <span>→</span>
+              Find verified work <span>→</span>
             </button>
             <button className="text-button" onClick={() => document.getElementById('how')?.scrollIntoView({ behavior: 'smooth' })}>
-              See how Pluto works <span className="play">▶</span>
+              How Pluto protects you <span className="play">→</span>
             </button>
           </div>
           <div className="proof-row">
             <div className="faces" aria-hidden="true"><span>AR</span><span>MK</span><span>JL</span></div>
-            <p><strong>1,240+ creatives</strong><br />already in our orbit</p>
+            <p><strong>1,240+ professionals</strong><br />in the verified network</p>
           </div>
         </div>
 
@@ -93,7 +93,7 @@ export default function Home() {
           <div className="orbit-line orbit-two" />
           <div className="tiny-moon moon-one" />
           <div className="tiny-moon moon-two" />
-          <div className="planet"><span>0%</span><small>talent fee</small></div>
+          <div className="planet"><span>100%</span><small>of your quote</small></div>
 
           <section className="app-window">
             <div className="app-topbar">
@@ -116,7 +116,7 @@ export default function Home() {
               <div className="app-content">
                 {view === 'talent' ? (
                   <>
-                    <div className="app-heading"><div><span>GOOD MORNING, AKSHAEY</span><h2>Your next mission.</h2></div><button>Filters <b>2</b></button></div>
+                    <div className="app-heading"><div><span>GOOD MORNING, AKSHAEY</span><h2>Recommended opportunities.</h2></div><button>Filters <b>2</b></button></div>
                     <div className="match-banner"><span>✦</span><div><strong>Fresh matches are ready</strong><small>Curated from your skills and availability</small></div><b>12</b></div>
                     <div className="project-list">
                       {opportunities.map((item, index) => (
@@ -130,9 +130,9 @@ export default function Home() {
                   </>
                 ) : (
                   <>
-                    <div className="app-heading"><div><span>CLIENT COMMAND</span><h2>Build your crew.</h2></div><button>Post a brief +</button></div>
+                    <div className="app-heading"><div><span>CLIENT WORKSPACE</span><h2>Build your project team.</h2></div><button>Post a brief +</button></div>
                     <div className="client-stats"><div><small>ACTIVE PROJECTS</small><strong>04</strong><span>2 on track</span></div><div><small>TALENT MATCHES</small><strong>18</strong><span>Ready to review</span></div><div><small>PROTECTED</small><strong>₹2.4L</strong><span>Across milestones</span></div></div>
-                    <div className="client-project"><div className="project-progress"><span>BRAND IDENTITY · MISSION 04</span><strong>Northstar launch system</strong><div><i style={{ width: '72%' }} /></div><small>Milestone 3 of 4 · Delivery in 4 days</small></div><button>Open workspace →</button></div>
+                    <div className="client-project"><div className="project-progress"><span>BRAND IDENTITY · PROJECT 04</span><strong>Northstar launch system</strong><div><i style={{ width: '72%' }} /></div><small>Milestone 3 of 4 · Delivery in 4 days</small></div><button>Open workspace →</button></div>
                     <div className="talent-strip"><span className="avatar purple">NS</span><div><small>YOUR PLUTO MATCH</small><strong>Nina Shah · Brand designer</strong></div><b>98% match</b></div>
                   </>
                 )}
@@ -144,12 +144,12 @@ export default function Home() {
       </section>
 
       <section className="trust-strip" aria-label="Pluto commitments">
-        <div className="shell"><span>NO PAID BIDS</span><i /> <span>100% OF YOUR QUOTE</span><i /> <span>VERIFIED CLIENTS</span><i /> <span>PROTECTED MILESTONES</span></div>
+        <div className="shell"><span>NO APPLICATION FEES</span><i /> <span>FREELANCERS KEEP 100%</span><i /> <span>VERIFIED CLIENTS</span><i /> <span>FUNDED MILESTONES</span></div>
       </section>
 
       <section className="way-section shell" id="how">
-        <div className="section-kicker"><span>01 / THE PLUTO WAY</span><p>Commitment without the toll booth.</p></div>
-        <div className="way-intro"><h2>A better freelance<br />economy is <em>landing.</em></h2><p>Pluto replaces pay-to-play bidding with a fair system built around fit, funded milestones, and a reputation you actually earn.</p></div>
+        <div className="section-kicker"><span>01 / HOW PLUTO WORKS</span><p>Clear from brief to payment.</p></div>
+        <div className="way-intro"><h2>A professional workflow<br />from brief to <em>payment.</em></h2><p>Pluto replaces pay-to-apply bidding with verified clients, relevant matching, clear milestones, and reliable payment protection.</p></div>
         <div className="steps-layout">
           <div className="step-tabs">
             {[
@@ -173,8 +173,8 @@ export default function Home() {
 
       <section className="opportunities-section" id="opportunities">
         <div className="shell">
-          <div className="section-kicker light"><span>02 / OPEN MISSIONS</span><p>Curated, clear, ready to start.</p></div>
-          <div className="jobs-heading"><h2>Work worth<br /><em>showing up for.</em></h2><div><p>Every brief is payment-verified before it reaches you.</p><span className="live-dot"><i /> 24 missions live now</span></div></div>
+          <div className="section-kicker light"><span>02 / VERIFIED OPPORTUNITIES</span><p>Curated, clear, ready to start.</p></div>
+          <div className="jobs-heading"><h2>Projects with<br /><em>clear expectations.</em></h2><div><p>Every brief is payment-verified before it reaches you.</p><span className="live-dot"><i /> 24 projects available now</span></div></div>
           <div className="category-filter" role="group" aria-label="Filter opportunities">
             {['All', 'Brand', 'Product', 'Motion', 'Development'].map((item) => <button className={category === item ? 'active' : ''} onClick={() => setCategory(item)} key={item}>{item}</button>)}
           </div>
@@ -184,18 +184,18 @@ export default function Home() {
                 <div className={`company-tile ${job.color}`}><span>{job.company.split(' ')[0][0]}{job.company.split(' ')[1]?.[0] || ''}</span><small>{job.company}</small></div>
                 <div className="job-title"><span>{job.category.toUpperCase()} · VERIFIED CLIENT</span><h3>{job.title}</h3><div>{job.skills.map(skill => <small key={skill}>{skill}</small>)}</div></div>
                 <div className="job-numbers"><div><small>BUDGET</small><strong>{job.budget}</strong></div><div><small>TIMELINE</small><strong>{job.duration}</strong></div></div>
-                <div className="job-actions"><span>{job.match}% match</span><button className={saved.includes(job.id) ? 'saved' : ''} aria-label={saved.includes(job.id) ? 'Remove saved job' : 'Save job'} onClick={() => setSaved(saved.includes(job.id) ? saved.filter(id => id !== job.id) : [...saved, job.id])}>{saved.includes(job.id) ? '♥' : '♡'}</button><button onClick={() => setSelectedJob(job)}>View mission →</button></div>
+                <div className="job-actions"><span>{job.match}% match</span><button className={saved.includes(job.id) ? 'saved' : ''} aria-label={saved.includes(job.id) ? 'Remove saved job' : 'Save job'} onClick={() => setSaved(saved.includes(job.id) ? saved.filter(id => id !== job.id) : [...saved, job.id])}>{saved.includes(job.id) ? '♥' : '♡'}</button><button onClick={() => setSelectedJob(job)}>View project →</button></div>
               </article>
             ))}
           </div>
-          <button className="all-missions" onClick={() => notify('You’re viewing every live mission.')}>View all 24 missions <span>↗</span></button>
+          <button className="all-missions" onClick={() => notify('You’re viewing every available project.')}>View all 24 opportunities <span>↗</span></button>
         </div>
       </section>
 
       <section className="protect-section shell" id="safety">
         <div className="section-kicker"><span>03 / PLUTO PROTECT</span><p>Confidence on both sides.</p></div>
         <div className="protect-grid">
-          <div className="protect-copy"><h2>Work delivered.<br /><em>Payment, secured.</em></h2><p>Clients fund each milestone before work starts. Pluto releases it when the work is approved—or automatically after the review window.</p><ul><li><span>✓</span> Payment method verified before matching</li><li><span>✓</span> Scope and revisions agreed up front</li><li><span>✓</span> Evidence-based dispute assistance</li></ul><button className="dark-button" onClick={() => notify('Pluto Protect guide opened.')}>Explore Pluto Protect <span>→</span></button></div>
+          <div className="protect-copy"><h2>Funded before<br /><em>work begins.</em></h2><p>Clients fund each milestone before work starts. Pluto releases it when the work is approved—or automatically after the review window.</p><ul><li><span>✓</span> Payment method verified before matching</li><li><span>✓</span> Scope and revisions agreed up front</li><li><span>✓</span> Evidence-based dispute assistance</li></ul><button className="dark-button" onClick={() => notify('Pluto Protect guide opened.')}>Explore Pluto Protect <span>→</span></button></div>
           <div className="fee-calculator">
             <div className="calc-top"><span>CLIENT FEE CALCULATOR</span><b>Transparent. Always.</b></div>
             <label htmlFor="budget">Project budget <strong>₹{budget.toLocaleString('en-IN')}</strong></label>
@@ -222,15 +222,15 @@ export default function Home() {
 
       <section className="final-cta">
         <div className="cta-orbit one"/><div className="cta-orbit two"/><div className="cta-planet">P</div>
-        <div className="shell"><span>YOUR NEXT MISSION IS OUT THERE</span><h2>Ready to enter<br /><em>Pluto’s orbit?</em></h2><p>Join a marketplace where your skills open doors—not your wallet.</p><div><button onClick={() => notify('Welcome aboard! Your talent profile is ready to begin.')}>Join as talent <span>→</span></button><button onClick={() => { setView('client'); notify('Client workspace selected. Let’s build your brief.'); window.scrollTo({top:0,behavior:'smooth'}); }}>Hire on Pluto <span>↗</span></button></div></div>
+        <div className="shell"><span>START WITH CLEAR TERMS</span><h2>Better work begins<br /><em>with trust.</em></h2><p>Join a professional marketplace built for fair, focused collaboration.</p><div><button onClick={() => notify('Your talent profile is ready to begin.')}>Join as talent <span>→</span></button><button onClick={() => { setView('client'); notify('Client workspace selected. Let’s build your brief.'); window.scrollTo({top:0,behavior:'smooth'}); }}>Hire on Pluto <span>↗</span></button></div></div>
       </section>
 
       <footer>
-        <div className="shell footer-grid"><div><a className="brand footer-brand" href="#top"><span className="logo-crop footer-logo"><img src="/pluto-logo.png" alt="Pluto" /></span></a><p>Fair work, in orbit.</p></div><div><span>PLATFORM</span><a href="#opportunities">Find work</a><a href="#top">Hire talent</a><a href="#safety">Pluto Protect</a></div><div><span>COMPANY</span><a href="#how">About</a><a href="#how">Manifesto</a><a href="#opportunities">Careers</a></div><div><span>FOLLOW</span><a href="#">LinkedIn ↗</a><a href="#">Instagram ↗</a><a href="#">X / Twitter ↗</a></div></div>
+        <div className="shell footer-grid"><div><a className="brand footer-brand" href="#top"><span className="logo-crop footer-logo"><img src="/pluto-logo.png" alt="Pluto" /></span></a><p>Independent work, built on trust.</p></div><div><span>PLATFORM</span><a href="#opportunities">Find work</a><a href="#top">Hire talent</a><a href="#safety">Pluto Protect</a></div><div><span>COMPANY</span><a href="#how">About</a><a href="#how">Principles</a><a href="#opportunities">Careers</a></div><div><span>FOLLOW</span><a href="#">LinkedIn ↗</a><a href="#">Instagram ↗</a><a href="#">X / Twitter ↗</a></div></div>
         <div className="shell footer-bottom"><span>© 2026 PLUTO MARKETPLACE</span><div><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Accessibility</a></div><span>MADE FOR INDEPENDENTS</span></div>
       </footer>
 
-      {selectedJob && <div className="modal-backdrop" role="presentation" onMouseDown={() => setSelectedJob(null)}><section className="job-modal" role="dialog" aria-modal="true" aria-labelledby="mission-title" onMouseDown={event => event.stopPropagation()}><button className="modal-close" onClick={() => setSelectedJob(null)} aria-label="Close mission">×</button><span>{selectedJob.company} · {selectedJob.match}% MATCH</span><h2 id="mission-title">{selectedJob.title}</h2><p>We’re looking for a thoughtful independent specialist to shape a focused, high-quality launch. You’ll work directly with the founding team inside a clearly funded Pluto milestone.</p><div className="modal-details"><div><small>BUDGET</small><strong>{selectedJob.budget}</strong></div><div><small>TIMELINE</small><strong>{selectedJob.duration}</strong></div><div><small>PLUTO FEE</small><strong>₹0 for talent</strong></div></div><div className="modal-skills">{selectedJob.skills.map(skill => <span key={skill}>{skill}</span>)}</div><button className="primary modal-apply" onClick={() => {setSelectedJob(null);notify('Application started — no tokens required.')}}>Start application <span>→</span></button><small>No tokens. About 4 minutes.</small></section></div>}
+      {selectedJob && <div className="modal-backdrop" role="presentation" onMouseDown={() => setSelectedJob(null)}><section className="job-modal" role="dialog" aria-modal="true" aria-labelledby="project-title" onMouseDown={event => event.stopPropagation()}><button className="modal-close" onClick={() => setSelectedJob(null)} aria-label="Close project">×</button><span>{selectedJob.company} · {selectedJob.match}% MATCH</span><h2 id="project-title">{selectedJob.title}</h2><p>We’re looking for a thoughtful independent specialist to shape a focused, high-quality launch. You’ll work directly with the founding team inside a clearly funded Pluto milestone.</p><div className="modal-details"><div><small>BUDGET</small><strong>{selectedJob.budget}</strong></div><div><small>TIMELINE</small><strong>{selectedJob.duration}</strong></div><div><small>PLUTO FEE</small><strong>₹0 for talent</strong></div></div><div className="modal-skills">{selectedJob.skills.map(skill => <span key={skill}>{skill}</span>)}</div><button className="primary modal-apply" onClick={() => {setSelectedJob(null);notify('Application started — no tokens required.')}}>Start application <span>→</span></button><small>No application fee. About 4 minutes.</small></section></div>}
       {toast && <div className="toast" role="status"><span>✓</span>{toast}</div>}
     </main>
   );
