@@ -3,6 +3,7 @@ import { Manrope, IBM_Plex_Mono } from 'next/font/google';
 import './globals.css';
 import './mission.css';
 import './professional.css';
+import './multi-page.css';
 
 const dmSans = Manrope({ variable: '--font-dm', subsets: ['latin'] });
 const spaceMono = IBM_Plex_Mono({ variable: '--font-mono', weight: ['400', '500', '700'], subsets: ['latin'] });
