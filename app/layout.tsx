@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
-import { DM_Sans, Space_Mono } from 'next/font/google';
+import { Manrope, IBM_Plex_Mono } from 'next/font/google';
 import './globals.css';
+import './mission.css';
 
-const dmSans = DM_Sans({ variable: '--font-dm', subsets: ['latin'] });
-const spaceMono = Space_Mono({ variable: '--font-mono', weight: ['400', '700'], subsets: ['latin'] });
+const dmSans = Manrope({ variable: '--font-dm', subsets: ['latin'] });
+const spaceMono = IBM_Plex_Mono({ variable: '--font-mono', weight: ['400', '500', '700'], subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Pluto — Fair work, in orbit',
