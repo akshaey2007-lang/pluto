@@ -5,6 +5,29 @@
 .link-button { display:inline-flex; align-items:center; justify-content:space-between; text-decoration:none; }
 .primary.link-button { padding:15px 18px; gap:45px; }
 .text-button.link-button { padding:10px 0; gap:16px; }
+.access-stage { min-height:590px; display:grid; place-items:center; }
+.access-window { width:94%; min-height:520px; background:#171922; border:1px solid #343744; border-radius:12px; box-shadow:0 28px 70px rgba(0,0,0,.34); overflow:hidden; }
+.access-topbar { height:58px; padding:0 20px; display:flex; align-items:center; justify-content:space-between; background:#1c1f29; border-bottom:1px solid #323641; }
+.access-topbar small { font:700 7px var(--font-mono); letter-spacing:.12em; color:#737987; }
+.access-topbar>i { width:8px; height:8px; background:#55b887; border-radius:50%; box-shadow:0 0 0 4px rgba(85,184,135,.1); }
+.access-intro { padding:28px 32px 20px; }
+.access-intro>span { font:700 7px var(--font-mono); letter-spacing:.11em; color:#9d80ef; }
+.access-intro h2 { font-size:30px; line-height:1.02; letter-spacing:-.045em; margin:10px 0 8px; }
+.access-intro p { color:#818794; font-size:11px; margin:0; }
+.access-options { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; padding:0 32px 25px; }
+.access-options>a { min-height:225px; color:white; text-decoration:none; padding:22px; border:1px solid #353946; border-radius:8px; display:flex; flex-direction:column; transition:.2s; }
+.access-options>a:hover { transform:translateY(-3px); border-color:#7c5be2; }
+.access-options>a.client-access { background:#f1f1f3; color:#1c1d23; border-color:#f1f1f3; }
+.access-icon { width:36px; height:36px; display:grid; place-items:center; border-radius:50%; background:#7754e8; color:white; font:700 11px var(--font-mono); }
+.client-access .access-icon { background:#272330; }
+.access-options small { margin-top:20px; font:700 7px var(--font-mono); letter-spacing:.1em; color:#9d80ef; }
+.client-access small { color:#6c4fc0; }
+.access-options h3 { font-size:22px; margin:7px 0; }
+.access-options p { font-size:10px; line-height:1.55; color:#8e949f; margin:0; }
+.client-access p { color:#747984; }
+.access-options b { margin-top:auto; font-size:9px; }
+.access-footer { border-top:1px solid #30333e; padding:15px 32px; color:#777d89; font-size:8px; }
+.access-footer i { display:inline-block; width:6px; height:6px; border-radius:50%; background:#55b887; margin-right:7px; }
 
 .route-section { padding:120px 0 130px; }
 .route-heading { display:grid; grid-template-columns:.35fr .9fr .65fr; align-items:end; gap:40px; padding-bottom:55px; border-bottom:1px solid #30333d; }

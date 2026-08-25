@@ -8,6 +8,7 @@ const links = [
   ['How it works', '/how-it-works'],
   ['Find work', '/opportunities'],
   ['Pluto Protect', '/protect'],
+  ['Talent login', '/login/talent'],
 ];
 
 export default function SiteHeader() {
@@ -23,7 +24,7 @@ export default function SiteHeader() {
       <nav className={`nav-links page-nav ${open ? 'open' : ''}`} aria-label="Main navigation">
         {links.map(([label, href]) => <Link className={pathname.startsWith(href) ? 'active' : ''} href={href} key={href} onClick={() => setOpen(false)}>{label}</Link>)}
       </nav>
-      <Link className="nav-cta" href="/hire">Hire talent <span>↗</span></Link>
+      <Link className="nav-cta" href="/login/client">Client login <span>↗</span></Link>
     </header>
   );
 }
