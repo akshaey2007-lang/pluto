@@ -1,0 +1,42 @@
+/* Pluto Signal Desk — public and access theme */
+:root { --ink:#15181d; --ink-soft:#68707c; --violet:#f4c945; --violet-deep:#9a7400; --lime:#f4c945; --page:#f4f5f6; --line:#d9dde2; --shadow:none; }
+body { background:#f4f5f6; }
+body::before { background:#f4f5f6; }
+body::after { display:none; }
+.liquid { background:#ffffff; border-color:#d9dde2; box-shadow:none; backdrop-filter:none; -webkit-backdrop-filter:none; }
+.liquid::before { display:none; }
+.site-header { grid-template-columns:142px 1fr; gap:0; padding:4px 8px 4px 16px; border:1px solid #171a1f; background:#171a1f; box-shadow:0 14px 34px rgba(20,22,27,.12); }
+.brand { min-height:62px; padding-left:0; background:transparent; }
+.header-menu { color:#f0f2f5; background:transparent; border:0; border-radius:0; }
+img[src$="pluto-logo-transparent.png"] { filter:brightness(0) saturate(100%) invert(87%) sepia(66%) saturate(716%) hue-rotate(337deg) brightness(100%) contrast(92%); }
+.primary-navigation a { color:#b9c0ca; border-radius:0; }
+.primary-navigation a:hover { color:#ffffff; background:#252a31; }
+.primary-navigation a[aria-current="page"] { color:#171a1f; background:#f4c945; }
+.nav-trigger { color:#f0f2f5; border-radius:0; }
+.nav-trigger:hover { color:#171a1f; background:#f4c945; }
+.nav-popover { color:#15181d; border-radius:0; border-color:#cfd4da; background:#ffffff; box-shadow:0 20px 50px rgba(20,22,27,.15); }
+.nav-popover a { border-radius:0; }.nav-popover a:hover { background:#fff6d8; }
+.primary-button { color:#171a1f; border-color:#e3b72d; border-radius:0; background:#f4c945; box-shadow:none; }
+.primary-button:hover { color:#ffffff; border-color:#171a1f; background:#171a1f; box-shadow:none; }
+.secondary-button,.light-button { border-color:#cfd4da; border-radius:0; background:#ffffff; }
+.secondary-button:hover { color:#ffffff; background:#171a1f; }
+.eyebrow { color:#171a1f; border-color:#d9dde2; border-radius:0; background:#ffffff; }.eyebrow i { background:#f4c945; box-shadow:none; }
+.gradient-text { color:#15181d; background:none; -webkit-text-fill-color:initial; }
+.platform-card,.info-card,.role-card,.dark-panel,.content-hero-card,.dashboard-preview,.milestone-demo,.cta-panel,.auth-intro,.auth-panel,.timeline-item,.filter-shell,.talent-card { border-radius:0; }
+.platform-card { border-top:4px solid #171a1f; }
+.live-status { border-radius:0; background:#f4c945; }.live-status i { background:#171a1f; }
+.orbit-ring { border-color:#d9dde2; box-shadow:none; }.orbit-logo { border-radius:50%; border-color:#d9dde2; box-shadow:none; background:#f4f5f6; }
+.platform-metrics div { border-radius:0; border-color:#d9dde2; background:#f4f5f6; }
+.info-icon { color:#171a1f; border-radius:0; background:#f4c945; box-shadow:none; font-style:normal; }
+.role-card.talent-role,.dark-panel { color:#ffffff; background:#171a1f; border-color:#171a1f; }
+.role-card.client-role { background:#f4c945; border-color:#e3b72d; }
+.fee-row { border-radius:0; border-color:#353a42; background:#23272d; }.fee-row strong { color:#f4c945; }
+.timeline-item b { color:#171a1f; background:#f4c945; }
+.filter-chip { border-radius:0; }.filter-chip.active { color:#171a1f; background:#f4c945; border-color:#e3b72d; }
+.talent-card.featured,.talent-card.ink,.talent-card.blue { background:#171a1f; }.talent-card.lime { background:#f4c945; }.talent-card.rose { background:#f2e8d4; }
+.shortlist-button { border-radius:0; }.shortlist-button.selected { background:#f4c945; }
+.auth-intro { background:#171a1f; }.auth-intro.client { color:#ffffff; background:#23272d; }.auth-points span::before { color:#f4c945; }.auth-intro.client .auth-points span::before { color:#f4c945; }
+.field input,.field select,.password-toggle { border-radius:0; }.password-toggle { color:#171a1f; background:#f4c945; }
+.form-success { border-radius:0; }
+.toast { border-radius:0; background:#171a1f; }
+@media (max-width:780px) { .site-header { padding:7px 9px 7px 14px; }.header-menu { padding:10px 0 2px; border-radius:0; background:transparent; }.menu-toggle { border-radius:0; background:#f4c945; } }
