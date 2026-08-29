@@ -32,7 +32,7 @@ export default function ClientLoginPage() {
             <button type="submit">Enter client workspace <span>↗</span></button>
           </form>
           <div className="entry-demo-note client-demo-note"><i>i</i><p><strong>Portfolio preview</strong>Use any email and password. Details are not stored.</p></div>
-          <div className="client-entry-support"><span>NEW TO PLUTO?</span><Link href="/hire">Create a project brief →</Link></div>
+          <div className="client-entry-support"><span>NEW TO PLUTO?</span><Link href="/signup/client">Create a client account →</Link></div>
         </div>
         <div className="client-control-preview">
           <div className="control-preview-top"><span>PLUTO LABS / OVERVIEW</span><b><i /> ALL SYSTEMS CLEAR</b></div>

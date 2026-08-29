@@ -44,6 +44,7 @@ export default function TalentLoginPage() {
             <div className="entry-password-label"><label htmlFor="talent-password">Password</label><a href="#">Forgot password?</a></div><input id="talent-password" type="password" value={password} onChange={event => setPassword(event.target.value)} placeholder="Enter password" autoComplete="current-password" required />
             <button type="submit">Open talent workspace <span>→</span></button>
           </form>
+          <div className="entry-signup-switch"><span>New to Pluto?</span><Link href="/signup/talent">Create a talent account →</Link></div>
           <div className="entry-demo-note"><i>i</i><p><strong>Portfolio preview</strong>Use any email and password. Details are not stored.</p></div>
           <Link className="entry-back" href="/">← Back to Pluto</Link>
         </aside>
