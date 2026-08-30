@@ -53,12 +53,47 @@ if (header) {
 if (footer) {
   footer.className = 'site-footer section-shell';
   footer.innerHTML = `
-    <a class="footer-brand" href="index.html"><img src="assets/pluto-logo-transparent.png" alt="Pluto"></a>
-    <p>Fair access to work. Clear commitments. Protected delivery.</p>
-    <nav aria-label="Footer navigation">
-      <a href="talent.html">Talent</a><a href="clients.html">Clients</a><a href="how-it-works.html">How it works</a><a href="protection.html">Protection</a>
-    </nav>
-    <span>© 2026 Pluto</span>`;
+    <div class="footer-primary">
+      <div class="footer-brand-block">
+        <a class="footer-brand" href="index.html"><img src="assets/pluto-logo-transparent.png" alt="Pluto"></a>
+        <p>Pluto connects verified independent specialists with clearly scoped projects and funded milestones.</p>
+        <div class="footer-trust" aria-label="Platform commitments">
+          <span>Free for talent to apply</span>
+          <span>Focused client shortlists</span>
+          <span>Funded before work begins</span>
+        </div>
+      </div>
+      <div class="footer-column">
+        <h2>Platform</h2>
+        <nav aria-label="Platform links">
+          <a href="how-it-works.html">How it works</a>
+          <a href="protection.html">Protection</a>
+          <a href="talent.html">Talent Atlas</a>
+          <a href="clients.html">For clients</a>
+        </nav>
+      </div>
+      <div class="footer-column">
+        <h2>Talent</h2>
+        <nav aria-label="Talent links">
+          <a href="talent-signup.html">Join as talent</a>
+          <a href="talent-login.html">Talent login</a>
+          <a href="talent-dashboard.html">Talent Signal Desk</a>
+        </nav>
+      </div>
+      <div class="footer-column">
+        <h2>Clients</h2>
+        <nav aria-label="Client links">
+          <a href="client-signup.html">Start a project</a>
+          <a href="client-login.html">Client login</a>
+          <a href="client-dashboard.html">Client Signal Desk</a>
+        </nav>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Pluto</span>
+      <span>Professional marketplace prototype</span>
+      <a href="protection.html">Clear scope · Funded milestones · Protected delivery</a>
+    </div>`;
 }
 
 const menuToggle = document.querySelector('.menu-toggle');

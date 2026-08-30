@@ -39,3 +39,10 @@ img[src$="pluto-logo-transparent.png"] { filter:brightness(0) saturate(100%) inv
 .form-success { border-radius:0; }
 .toast { border-radius:0; background:#171a1f; }
 @media (max-width:780px) { .site-header { padding:7px 9px 7px 14px; }.header-menu { padding:10px 0 2px; border-radius:0; background:transparent; }.menu-toggle { border-radius:0; background:#f4c945; } }
+/* Expanded footer */
+.site-footer { color: #b9c0ca; background: #171a1f; border-color: #171a1f; }
+.site-footer .footer-column h2 { color: #f4c945; }
+.site-footer .footer-trust span { color: #f0f2f5; background: #23272d; border-color: #353a42; }
+.site-footer .footer-bottom { color: #8f97a2; border-color: #353a42; }
+.site-footer .footer-bottom a { color: #f4c945; }
+.site-footer a:hover { color: #f4c945; }
