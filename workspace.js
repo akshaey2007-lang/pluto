@@ -27,7 +27,21 @@ const viewTitle = document.querySelector('#view-title');
 const viewSubtitle = document.querySelector('#view-subtitle');
 const search = document.querySelector('#workspace-search');
 const toast = document.querySelector('.workspace-toast');
+const sidebarToggle = document.querySelector('.mobile-sidebar-toggle');
+const sidebarScrim = document.createElement('button');
+sidebarScrim.className = 'workspace-scrim';
+sidebarScrim.type = 'button';
+sidebarScrim.setAttribute('aria-label', 'Close workspace menu');
+document.body.appendChild(sidebarScrim);
 let toastTimer;
+
+function setSidebarOpen(open) {
+  sidebar.classList.toggle('open', open);
+  sidebarScrim.classList.toggle('open', open);
+  sidebarToggle?.setAttribute('aria-expanded', String(open));
+  sidebarToggle?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  document.body.style.overflow = open ? 'hidden' : '';
+}
 
 function showToast(message) {
   window.clearTimeout(toastTimer);
@@ -43,14 +57,26 @@ function activateView(view) {
   viewTitle.textContent = viewLabels[validView][0];
   viewSubtitle.textContent = viewLabels[validView][1];
   window.history.replaceState(null, '', `#${validView}`);
-  sidebar.classList.remove('open');
+  setSidebarOpen(false);
   search.value = '';
   filterCurrentView('');
 }
 
 document.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', () => activateView(button.dataset.view)));
 document.querySelectorAll('[data-go-view]').forEach((button) => button.addEventListener('click', () => activateView(button.dataset.goView)));
-document.querySelector('.mobile-sidebar-toggle')?.addEventListener('click', () => sidebar.classList.toggle('open'));
+sidebarToggle?.addEventListener('click', () => setSidebarOpen(!sidebar.classList.contains('open')));
+sidebarScrim.addEventListener('click', () => setSidebarOpen(false));
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 860 && sidebar.classList.contains('open')) setSidebarOpen(false);
+});
+
+document.querySelectorAll('.data-table').forEach((table) => {
+  const labels = [...table.querySelectorAll('thead th')].map((header) => header.textContent.trim() || 'Actions');
+  table.querySelectorAll('tbody tr').forEach((row) => {
+    [...row.children].forEach((cell, index) => cell.dataset.label = labels[index] || 'Details');
+  });
+});
 
 function filterCurrentView(query) {
   const activePanel = document.querySelector('[data-view-panel].active');
@@ -139,7 +165,7 @@ document.querySelector('.chat-compose')?.addEventListener('submit', (event) => {
 
 document.addEventListener('keydown', (event) => {
   if (event.key !== 'Escape') return;
-  sidebar.classList.remove('open');
+  setSidebarOpen(false);
   notificationDrawer?.classList.remove('open');
 });
 

@@ -112,8 +112,13 @@ body.workspace-page::before { display: none; }
 .dialog-close { border-radius: 0; }
 .workspace-toast { border-radius: 0; background: #171a1f; }
 
-@media (max-width: 820px) {
-  .workspace-sidebar { width: 224px; box-shadow: 20px 0 50px rgba(20,22,27,.2); }
+@media (max-width: 1240px) {
+  .workspace-topbar { grid-template-columns: minmax(220px,1fr) auto; }
+}
+
+@media (max-width: 860px) {
+  .workspace-shell { grid-template-columns: 1fr; }
+  .workspace-sidebar { width: min(280px,86vw); box-shadow: 20px 0 50px rgba(20,22,27,.2); }
   .workspace-topbar { grid-template-columns: auto minmax(0,1fr) auto; padding-inline: 13px; }
   .workspace-main { padding: 22px 14px 38px; }
 }

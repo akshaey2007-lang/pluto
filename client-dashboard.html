@@ -8,7 +8,7 @@
   </head>
   <body class="workspace-page" data-workspace="client">
     <div class="workspace-shell">
-      <aside class="workspace-sidebar" aria-label="Client workspace menu">
+      <aside class="workspace-sidebar" id="workspace-sidebar" aria-label="Client workspace menu">
         <a class="workspace-logo" href="index.html" aria-label="Pluto platform home"><img src="assets/pluto-logo-transparent.png" alt="Pluto"></a>
         <div class="workspace-role"><span>Client workspace</span><span>Verified</span></div>
         <nav class="workspace-menu">
@@ -29,7 +29,7 @@
 
       <div class="workspace-content">
         <header class="workspace-topbar">
-          <button class="mobile-sidebar-toggle" type="button" aria-label="Open menu">☰</button>
+          <button class="mobile-sidebar-toggle" type="button" aria-label="Open menu" aria-controls="workspace-sidebar" aria-expanded="false">☰</button>
           <label class="workspace-search"><span>⌕</span><input id="workspace-search" type="search" placeholder="Search projects, talent, or messages…" aria-label="Search current workspace view"></label>
           <div class="topbar-context">Client fees and funding are shown before confirmation</div>
           <div class="topbar-actions"><button class="icon-action" data-toast="Client help centre preview opened." aria-label="Help">?</button><button class="icon-action" data-notifications aria-label="Notifications">♢<i class="alert-dot"></i></button><button class="workspace-primary" data-dialog="project-dialog">Post a project</button></div>

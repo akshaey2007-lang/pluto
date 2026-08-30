@@ -8,7 +8,7 @@
   </head>
   <body class="workspace-page" data-workspace="talent">
     <div class="workspace-shell">
-      <aside class="workspace-sidebar" aria-label="Talent workspace menu">
+      <aside class="workspace-sidebar" id="workspace-sidebar" aria-label="Talent workspace menu">
         <a class="workspace-logo" href="index.html" aria-label="Pluto platform home"><img src="assets/pluto-logo-transparent.png" alt="Pluto"></a>
         <div class="workspace-role"><span>Talent workspace</span><span>Verified</span></div>
         <nav class="workspace-menu">
@@ -28,7 +28,7 @@
 
       <div class="workspace-content">
         <header class="workspace-topbar">
-          <button class="mobile-sidebar-toggle" type="button" aria-label="Open menu">☰</button>
+          <button class="mobile-sidebar-toggle" type="button" aria-label="Open menu" aria-controls="workspace-sidebar" aria-expanded="false">☰</button>
           <label class="workspace-search"><span>⌕</span><input id="workspace-search" type="search" placeholder="Search this workspace…" aria-label="Search current workspace view"></label>
           <div class="topbar-context">Talent keeps 100% of every quoted milestone</div>
           <div class="topbar-actions"><button class="icon-action" data-toast="Workspace help centre preview opened." aria-label="Help">?</button><button class="icon-action" data-notifications aria-label="Notifications">♢<i class="alert-dot"></i></button><button class="workspace-primary" data-dialog="proposal-dialog">Create proposal</button></div>

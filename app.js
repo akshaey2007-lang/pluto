@@ -98,10 +98,20 @@ if (footer) {
 
 const menuToggle = document.querySelector('.menu-toggle');
 const headerMenu = document.querySelector('.header-menu');
+
+function setHeaderMenuOpen(open) {
+  menuToggle?.setAttribute('aria-expanded', String(open));
+  headerMenu?.classList.toggle('open', open);
+}
+
 menuToggle?.addEventListener('click', () => {
   const open = menuToggle.getAttribute('aria-expanded') === 'true';
-  menuToggle.setAttribute('aria-expanded', String(!open));
-  headerMenu.classList.toggle('open', !open);
+  setHeaderMenuOpen(!open);
+});
+
+headerMenu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setHeaderMenuOpen(false)));
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 900) setHeaderMenuOpen(false);
 });
 
 document.querySelectorAll('.nav-trigger').forEach((trigger) => {
@@ -128,6 +138,7 @@ document.addEventListener('click', () => {
 
 document.addEventListener('keydown', (event) => {
   if (event.key !== 'Escape') return;
+  setHeaderMenuOpen(false);
   document.querySelectorAll('.nav-dropdown').forEach((item) => {
     item.classList.remove('open');
     item.querySelector('.nav-trigger').setAttribute('aria-expanded', 'false');
