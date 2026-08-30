@@ -20,7 +20,6 @@ img[src$="pluto-logo-transparent.png"] { filter:brightness(0) saturate(100%) inv
 .primary-button:hover { color:#ffffff; border-color:#171a1f; background:#171a1f; box-shadow:none; }
 .secondary-button,.light-button { border-color:#cfd4da; border-radius:0; background:#ffffff; }
 .secondary-button:hover { color:#ffffff; background:#171a1f; }
-.eyebrow { color:#171a1f; border-color:#d9dde2; border-radius:0; background:#ffffff; }.eyebrow i { background:#f4c945; box-shadow:none; }
 .gradient-text { color:#15181d; background:none; -webkit-text-fill-color:initial; }
 .platform-card,.info-card,.role-card,.dark-panel,.content-hero-card,.dashboard-preview,.milestone-demo,.cta-panel,.auth-intro,.auth-panel,.timeline-item,.filter-shell,.talent-card { border-radius:0; }
 .platform-card { border-top:4px solid #171a1f; }

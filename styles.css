@@ -62,8 +62,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .page-hero { min-height: 650px; padding: 96px 0 82px; display: grid; grid-template-columns: 1.08fr .92fr; align-items: center; gap: 72px; }
 .page-hero.single { min-height: 510px; grid-template-columns: 1fr; text-align: center; }
 .page-hero.single .hero-description { margin-inline: auto; }
-.eyebrow { display: inline-flex; align-items: center; gap: 9px; padding: 9px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,.7); background: rgba(255,255,255,.42); color: #4f4d72; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
-.eyebrow i { width: 8px; height: 8px; border-radius: 50%; background: var(--violet); box-shadow: 0 0 0 5px rgba(95,56,245,.11); }
 .page-hero h1 { margin: 26px 0 24px; max-width: 800px; font-size: clamp(58px,6.4vw,92px); line-height: .94; letter-spacing: -.065em; font-weight: 570; }
 .page-hero.single h1 { margin-inline: auto; }
 .gradient-text { color: transparent; background: linear-gradient(110deg,#4930d8,#7955ff 52%,#3153e7); background-clip: text; -webkit-background-clip: text; }
