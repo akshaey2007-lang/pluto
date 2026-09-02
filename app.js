@@ -26,21 +26,21 @@ if (header) {
       </nav>
       <div class="access-navigation">
         <div class="nav-dropdown">
-          <button class="nav-trigger" type="button" aria-expanded="false">Open desk <span>⌄</span></button>
+          <button class="nav-trigger" type="button" aria-expanded="false">Open desk</button>
           <div class="nav-popover liquid" role="menu">
             <a href="talent-dashboard.html" role="menuitem"><b>Talent Signal Desk</b><span>Opportunities, proposals, work, and earnings</span></a>
             <a href="client-dashboard.html" role="menuitem"><b>Client Signal Desk</b><span>Projects, matches, delivery, and payments</span></a>
           </div>
         </div>
         <div class="nav-dropdown">
-          <button class="nav-trigger" type="button" aria-expanded="false">Log in <span>⌄</span></button>
+          <button class="nav-trigger" type="button" aria-expanded="false">Log in</button>
           <div class="nav-popover liquid" role="menu">
             <a href="talent-login.html" role="menuitem"><b>Talent login</b><span>Opportunities and active work</span></a>
             <a href="client-login.html" role="menuitem"><b>Client login</b><span>Projects, matches, and payments</span></a>
           </div>
         </div>
         <div class="nav-dropdown">
-          <button class="primary-button compact nav-trigger" type="button" aria-expanded="false">Sign up <span>⌄</span></button>
+          <button class="primary-button compact nav-trigger" type="button" aria-expanded="false">Sign up</button>
           <div class="nav-popover nav-popover-right liquid" role="menu">
             <a href="talent-signup.html" role="menuitem"><b>Join as talent</b><span>Get verified and receive fair opportunities</span></a>
             <a href="client-signup.html" role="menuitem"><b>Join as a client</b><span>Build a focused shortlist for your project</span></a>
