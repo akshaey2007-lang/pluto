@@ -169,6 +169,120 @@ document.querySelectorAll('.password-toggle').forEach((button) => {
   });
 });
 
+const authDashboard = (role) => role === 'talent' ? 'talent-dashboard.html' : 'client-dashboard.html';
+
+document.querySelectorAll('.auth-form').forEach((emailForm) => {
+  const role = emailForm.dataset.role;
+  const mode = emailForm.dataset.mode;
+  const roleLabel = role === 'talent' ? 'Talent' : 'Client';
+  const actionLabel = mode === 'signup' ? 'Sign up' : 'Continue';
+  const phoneId = `${role}-${mode}-phone`;
+  const codeId = `${role}-${mode}-code`;
+  const methods = document.createElement('section');
+  methods.className = 'auth-methods';
+  methods.setAttribute('aria-label', `${roleLabel} access options`);
+  methods.innerHTML = `
+    <button class="auth-provider-button google-auth-button" type="button" data-google-auth>
+      <span class="provider-mark google-mark" aria-hidden="true">G</span>
+      <span>${actionLabel} with Google</span>
+      <span aria-hidden="true"></span>
+    </button>
+    <button class="auth-provider-button phone-toggle-button" type="button" data-phone-toggle aria-expanded="false" aria-controls="${phoneId}">
+      <span class="provider-mark phone-mark" aria-hidden="true">Phone</span>
+      <span>${actionLabel} with phone number</span>
+      <span aria-hidden="true"></span>
+    </button>
+    <div class="phone-auth-panel" id="${phoneId}" hidden>
+      <form class="phone-auth-form" data-step="number">
+        <div class="phone-step" data-phone-step="number">
+          <label for="${phoneId}-number">Mobile number</label>
+          <input id="${phoneId}-number" type="tel" inputmode="tel" autocomplete="tel" minlength="8" maxlength="18" placeholder="+91 98765 43210" required>
+          <button class="primary-button" type="submit">Send verification code</button>
+        </div>
+        <div class="phone-step" data-phone-step="code" hidden>
+          <label for="${codeId}">Six-digit verification code</label>
+          <input class="phone-code-input" id="${codeId}" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" placeholder="000000" disabled required>
+          <span class="phone-help">Use any six-digit code in this prototype.</span>
+          <div class="phone-code-actions">
+            <button class="secondary-button" type="button" data-change-phone>Change number</button>
+            <button class="primary-button" type="submit">Verify and continue</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <p class="auth-provider-status" role="status" aria-live="polite" hidden></p>
+    <div class="auth-divider"><span>or use email</span></div>`;
+
+  emailForm.before(methods);
+
+  const authDescription = emailForm.parentElement.querySelector('.auth-panel-header p');
+  if (authDescription) {
+    authDescription.textContent = mode === 'signup'
+      ? 'Choose a quick access method or continue with your professional details.'
+      : 'Choose Google, phone number, or the email attached to your profile.';
+  }
+
+  const status = methods.querySelector('.auth-provider-status');
+  const googleButton = methods.querySelector('[data-google-auth]');
+  const phoneToggle = methods.querySelector('[data-phone-toggle]');
+  const phonePanel = methods.querySelector('.phone-auth-panel');
+  const phoneForm = methods.querySelector('.phone-auth-form');
+  const numberStep = methods.querySelector('[data-phone-step="number"]');
+  const codeStep = methods.querySelector('[data-phone-step="code"]');
+  const phoneInput = methods.querySelector('input[type="tel"]');
+  const codeInput = methods.querySelector('.phone-code-input');
+
+  googleButton.addEventListener('click', () => {
+    googleButton.disabled = true;
+    status.hidden = false;
+    status.textContent = `Google ${mode === 'signup' ? 'account connected' : 'login successful'} for this demo. Opening your ${roleLabel.toLowerCase()} workspace.`;
+    window.setTimeout(() => window.location.href = authDashboard(role), 900);
+  });
+
+  phoneToggle.addEventListener('click', () => {
+    const open = phoneToggle.getAttribute('aria-expanded') === 'true';
+    phoneToggle.setAttribute('aria-expanded', String(!open));
+    phonePanel.hidden = open;
+    if (!open) window.setTimeout(() => phoneInput.focus(), 0);
+  });
+
+  phoneForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (phoneForm.dataset.step === 'number') {
+      if (!phoneInput.reportValidity()) return;
+      phoneForm.dataset.step = 'code';
+      phoneInput.disabled = true;
+      numberStep.hidden = true;
+      codeStep.hidden = false;
+      codeInput.disabled = false;
+      status.hidden = false;
+      status.textContent = 'Verification code prepared for this demo.';
+      codeInput.focus();
+      return;
+    }
+
+    if (!codeInput.reportValidity()) return;
+    codeInput.disabled = true;
+    status.hidden = false;
+    status.textContent = `Phone verification successful. Opening your ${roleLabel.toLowerCase()} workspace.`;
+    window.setTimeout(() => window.location.href = authDashboard(role), 900);
+  });
+
+  methods.querySelector('[data-change-phone]').addEventListener('click', () => {
+    phoneForm.dataset.step = 'number';
+    codeInput.value = '';
+    codeInput.disabled = true;
+    phoneInput.disabled = false;
+    codeStep.hidden = true;
+    numberStep.hidden = false;
+    status.hidden = true;
+    phoneInput.focus();
+  });
+
+  const demoNote = emailForm.parentElement.querySelector('.demo-note');
+  if (demoNote) demoNote.textContent = 'Prototype notice: email, Google, and phone demonstrate the access flow. No entered data is stored or sent, and production identity verification and SMS delivery are not connected yet.';
+});
+
 document.querySelectorAll('.auth-form').forEach((form) => {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -182,7 +296,7 @@ document.querySelectorAll('.auth-form').forEach((form) => {
       : `${role === 'talent' ? 'Talent' : 'Client'} demo login successful. Redirecting…`;
     form.querySelector('button[type="submit"]').disabled = true;
     window.setTimeout(() => {
-      window.location.href = role === 'talent' ? 'talent-dashboard.html' : 'client-dashboard.html';
+      window.location.href = authDashboard(role);
     }, 950);
   });
 });
