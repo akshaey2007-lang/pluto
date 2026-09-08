@@ -36,7 +36,7 @@ img[src$="pluto-logo-transparent.png"] { filter:brightness(0) saturate(100%) inv
 .shortlist-button { border-radius:0; }.shortlist-button.selected { background:#f4c945; }
 .auth-intro { background:#171a1f; }.auth-intro.client { color:#ffffff; background:#23272d; }.auth-points span::before { color:#f4c945; }.auth-intro.client .auth-points span::before { color:#f4c945; }
 .field input,.field select,.password-toggle { border-radius:0; }.password-toggle { color:#171a1f; background:#f4c945; }
-.auth-provider-button,.phone-auth-panel,.phone-step input { border-radius:0; }
+.auth-provider-button,.google-signin-loading,.phone-auth-panel,.phone-step input { border-radius:0; }
 .auth-provider-button { border-color:#cfd4da; background:#ffffff; }
 .auth-provider-button:hover { border-color:#171a1f; background:#fffaf0; }
 .google-mark,.phone-mark { border-radius:0; }

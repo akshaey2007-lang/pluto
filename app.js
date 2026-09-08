@@ -170,6 +170,44 @@ document.querySelectorAll('.password-toggle').forEach((button) => {
 });
 
 const authDashboard = (role) => role === 'talent' ? 'talent-dashboard.html' : 'client-dashboard.html';
+const GOOGLE_CLIENT_ID = '922402174418-9vcvmgb1u6al78delh4u9j482ulrtqc2.apps.googleusercontent.com';
+
+let googleIdentityPromise;
+function loadGoogleIdentity() {
+  if (window.google?.accounts?.id) return Promise.resolve(window.google.accounts.id);
+  if (googleIdentityPromise) return googleIdentityPromise;
+
+  googleIdentityPromise = new Promise((resolve, reject) => {
+    const existingScript = document.querySelector('script[data-google-identity]');
+    const timeout = window.setTimeout(() => reject(new Error('Google Identity Services timed out.')), 12000);
+    const finish = () => {
+      window.clearTimeout(timeout);
+      if (window.google?.accounts?.id) resolve(window.google.accounts.id);
+      else reject(new Error('Google Identity Services did not load.'));
+    };
+    const fail = () => {
+      window.clearTimeout(timeout);
+      reject(new Error('Google Identity Services could not be reached.'));
+    };
+
+    if (existingScript) {
+      existingScript.addEventListener('load', finish, { once: true });
+      existingScript.addEventListener('error', fail, { once: true });
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    script.defer = true;
+    script.dataset.googleIdentity = 'true';
+    script.addEventListener('load', finish, { once: true });
+    script.addEventListener('error', fail, { once: true });
+    document.head.append(script);
+  });
+
+  return googleIdentityPromise;
+}
 
 document.querySelectorAll('.auth-form').forEach((emailForm) => {
   const role = emailForm.dataset.role;
@@ -182,11 +220,10 @@ document.querySelectorAll('.auth-form').forEach((emailForm) => {
   methods.className = 'auth-methods';
   methods.setAttribute('aria-label', `${roleLabel} access options`);
   methods.innerHTML = `
-    <button class="auth-provider-button google-auth-button" type="button" data-google-auth>
-      <span class="provider-mark google-mark" aria-hidden="true">G</span>
-      <span>${actionLabel} with Google</span>
-      <span aria-hidden="true"></span>
-    </button>
+    <div class="google-signin-shell" aria-label="${actionLabel} with Google">
+      <div class="google-signin-button" data-google-auth hidden></div>
+      <span class="google-signin-loading" data-google-loading>Loading Google sign-in...</span>
+    </div>
     <button class="auth-provider-button phone-toggle-button" type="button" data-phone-toggle aria-expanded="false" aria-controls="${phoneId}">
       <span class="provider-mark phone-mark" aria-hidden="true">Phone</span>
       <span>${actionLabel} with phone number</span>
@@ -224,6 +261,7 @@ document.querySelectorAll('.auth-form').forEach((emailForm) => {
 
   const status = methods.querySelector('.auth-provider-status');
   const googleButton = methods.querySelector('[data-google-auth]');
+  const googleLoading = methods.querySelector('[data-google-loading]');
   const phoneToggle = methods.querySelector('[data-phone-toggle]');
   const phonePanel = methods.querySelector('.phone-auth-panel');
   const phoneForm = methods.querySelector('.phone-auth-form');
@@ -232,11 +270,41 @@ document.querySelectorAll('.auth-form').forEach((emailForm) => {
   const phoneInput = methods.querySelector('input[type="tel"]');
   const codeInput = methods.querySelector('.phone-code-input');
 
-  googleButton.addEventListener('click', () => {
-    googleButton.disabled = true;
-    status.hidden = false;
-    status.textContent = `Google ${mode === 'signup' ? 'account connected' : 'login successful'} for this demo. Opening your ${roleLabel.toLowerCase()} workspace.`;
-    window.setTimeout(() => window.location.href = authDashboard(role), 900);
+  loadGoogleIdentity().then((googleIdentity) => {
+    googleIdentity.initialize({
+      client_id: GOOGLE_CLIENT_ID,
+      auto_select: false,
+      cancel_on_tap_outside: true,
+      context: mode === 'signup' ? 'signup' : 'signin',
+      callback: ({ credential }) => {
+        if (!credential) {
+          status.hidden = false;
+          status.dataset.state = 'error';
+          status.textContent = 'Google did not return an account. Please try again.';
+          return;
+        }
+
+        status.hidden = false;
+        status.dataset.state = 'success';
+        status.textContent = `Google ${mode === 'signup' ? 'sign-up' : 'sign-in'} completed. Opening your ${roleLabel.toLowerCase()} workspace.`;
+        window.setTimeout(() => window.location.href = authDashboard(role), 700);
+      },
+    });
+
+    googleLoading.hidden = true;
+    googleButton.hidden = false;
+    googleIdentity.renderButton(googleButton, {
+      type: 'standard',
+      theme: 'filled_black',
+      size: 'large',
+      text: mode === 'signup' ? 'signup_with' : 'continue_with',
+      shape: 'rectangular',
+      logo_alignment: 'left',
+      width: Math.min(400, Math.max(240, Math.floor(googleButton.parentElement.clientWidth))),
+    });
+  }).catch(() => {
+    googleLoading.textContent = 'Google sign-in is unavailable right now. Use phone or email instead.';
+    googleLoading.dataset.state = 'error';
   });
 
   phoneToggle.addEventListener('click', () => {
@@ -280,7 +348,7 @@ document.querySelectorAll('.auth-form').forEach((emailForm) => {
   });
 
   const demoNote = emailForm.parentElement.querySelector('.demo-note');
-  if (demoNote) demoNote.textContent = 'Prototype notice: email, Google, and phone demonstrate the access flow. No entered data is stored or sent, and production identity verification and SMS delivery are not connected yet.';
+  if (demoNote) demoNote.textContent = 'Google access uses Google Identity Services. Email and phone remain prototype flows; production account storage and SMS delivery are not connected yet.';
 });
 
 document.querySelectorAll('.auth-form').forEach((form) => {
