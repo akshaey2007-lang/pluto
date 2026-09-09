@@ -23,8 +23,7 @@ export async function currentProfile(request, env) {
   if (!/^[a-f0-9]{64}$/.test(token) || !env.DB) return null;
   return env.DB.prepare('SELECT p.*, u.name, u.email FROM sessions s JOIN profiles p ON p.id = s.profile_id JOIN users u ON u.id = p.user_id WHERE s.token_hash = ? AND s.expires_at > ?').bind(await hash(token), Date.now()).first();
 }
-const publicProfile = p => ({ name: p.name, email: p.email, role: p.role, dob: p.dob, education: p.education, phone: p.phone, skills: JSON.parse(p.skills), complete: !!p.complete, phoneVerified: !!p.phone_verified });
-export const otpConfigured = env => !!(env.TWILIO_ACCOUNT_SID && env.TWILIO_AUTH_TOKEN && env.TWILIO_VERIFY_SERVICE_SID);
+const publicProfile = p => ({ name: p.name, email: p.email, role: p.role, dob: p.dob, education: p.education, phone: p.phone, skills: JSON.parse(p.skills), complete: !!p.complete });
 async function body(request) {
   if (!request.headers.get('content-type')?.startsWith('application/json')) fail('JSON required.', 415);
   const raw = await request.text();
@@ -36,12 +35,6 @@ async function rateLimit(db, id, max, interval, cooldown = 0) {
   const result = await db.prepare('INSERT INTO otp_limits (id, count, resets_at, last_at) VALUES (?, 1, ?, ?) ON CONFLICT(id) DO UPDATE SET count = CASE WHEN resets_at <= ? THEN 1 ELSE count + 1 END, resets_at = CASE WHEN resets_at <= ? THEN ? ELSE resets_at END, last_at = ? WHERE (resets_at <= ? OR count < ?) AND last_at <= ? RETURNING id')
     .bind(id, now + interval, now, now, now, now + interval, now, now, max, now - cooldown).first();
   if (!result) fail('Please wait before trying again. Too many attempts.', 429);
-}
-async function twilio(env, endpoint, values) {
-  const response = await fetch(`https://verify.twilio.com/v2/Services/${encodeURIComponent(env.TWILIO_VERIFY_SERVICE_SID)}/${endpoint}`, { method: 'POST', headers: { Authorization: `Basic ${btoa(env.TWILIO_ACCOUNT_SID + ':' + env.TWILIO_AUTH_TOKEN)}`, 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(values), signal: AbortSignal.timeout(15000) });
-  const result = await response.json();
-  if (!response.ok) fail(endpoint === 'VerificationCheck' ? 'Code incorrect or expired. Request a new code if needed.' : 'SMS could not be sent. Please try again later.', 400);
-  return result;
 }
 export async function handleAuth(request, env) {
   const path = new URL(request.url).pathname;
@@ -86,38 +79,11 @@ export async function handleAuth(request, env) {
     }
     const profile = await currentProfile(request, env);
     if (!profile) fail('Please sign in to continue.', 401);
-    if (path === '/api/me' && request.method === 'GET') return json({ profile: publicProfile(profile), otpAvailable: otpConfigured(env) });
+    if (path === '/api/me' && request.method === 'GET') return json({ profile: publicProfile(profile) });
     if (path === '/api/profile' && request.method === 'PUT') {
       let data; try { data = validateProfile(await body(request)); } catch (error) { fail(error.message); }
-      await env.DB.batch([
-        env.DB.prepare('UPDATE profiles SET dob=?, education=?, phone_verified=CASE WHEN phone = ? THEN phone_verified ELSE 0 END, phone=?, skills=?, complete=1, updated_at=? WHERE id=?').bind(data.dob, data.education, data.phone, data.phone, JSON.stringify(data.skills), Date.now(), profile.id),
-        env.DB.prepare('DELETE FROM phone_challenges WHERE profile_id = ? AND phone != ?').bind(profile.id, data.phone),
-      ]);
+      await env.DB.prepare('UPDATE profiles SET dob=?, education=?, phone=?, skills=?, complete=1, updated_at=? WHERE id=?').bind(data.dob, data.education, data.phone, JSON.stringify(data.skills), Date.now(), profile.id).run();
       return json({ ok: true });
-    }
-    if (path.startsWith('/api/phone/') && request.method === 'POST') {
-      if (!otpConfigured(env)) fail('Phone verification is not available yet. Your profile can still be saved.', 503);
-      if (!profile.complete || !profile.phone) fail('Save your profile and phone number first.');
-      if (path === '/api/phone/send') {
-        await rateLimit(env.DB, 'send:' + profile.user_id, 5, 3600000, 60000);
-        await rateLimit(env.DB, 'phone:' + await hash(profile.phone), 5, 3600000, 60000);
-        const sent = await twilio(env, 'Verifications', { To: profile.phone, Channel: 'sms' });
-        await env.DB.prepare('INSERT INTO phone_challenges (profile_id, phone, sid, expires_at, attempts) VALUES (?, ?, ?, ?, 0) ON CONFLICT(profile_id) DO UPDATE SET phone=excluded.phone, sid=excluded.sid, expires_at=excluded.expires_at, attempts=0').bind(profile.id, profile.phone, sent.sid, Date.now() + 600000).run();
-        return json({ ok: true });
-      }
-      if (path === '/api/phone/verify') {
-        const data = await body(request);
-        if (typeof data.code !== 'string' || !/^\d{6}$/.test(data.code)) fail('Enter the six-digit code.');
-        const challenge = await env.DB.prepare('UPDATE phone_challenges SET attempts=attempts+1 WHERE profile_id=? AND phone=? AND expires_at > ? AND attempts < 5 RETURNING sid').bind(profile.id, profile.phone, Date.now()).first();
-        if (!challenge) fail('Code expired or too many attempts. Request a new code.');
-        const checked = await twilio(env, 'VerificationCheck', { VerificationSid: challenge.sid, Code: data.code });
-        if (checked.status !== 'approved') fail('Code incorrect or expired.');
-        await env.DB.batch([
-          env.DB.prepare('UPDATE profiles SET phone_verified=1 WHERE id=? AND phone=?').bind(profile.id, profile.phone),
-          env.DB.prepare('DELETE FROM phone_challenges WHERE profile_id=? AND sid=?').bind(profile.id, challenge.sid),
-        ]);
-        return json({ ok: true });
-      }
     }
     return json({ error: 'Not found.' }, 404);
   } catch (error) {

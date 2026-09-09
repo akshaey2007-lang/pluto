@@ -61,42 +61,17 @@ test('anonymous, expired and cross-origin requests are rejected', async () => {
   db.exec('UPDATE sessions SET expires_at=0');
   assert.equal((await handleAuth(request('/api/me'), env)).status, 401); db.close();
 });
-test('profile saves survive requests, cannot overwrite Google identity or another role, and reset phone verification on change', async () => {
+test('profile saves survive requests and cannot overwrite Google identity or another role', async () => {
   const { db, env, request } = await setup();
   assert.equal((await handleAuth(request('/api/profile', 'PUT', { ...valid, name: 'Fake', user_id: 'other', role: 'client' }), env)).status, 200);
   const profile = (await (await handleAuth(request('/api/me'), env)).json()).profile;
   assert.equal(profile.name, '<Test User>'); assert.equal(profile.role, 'talent'); assert.equal(profile.complete, true); assert.deepEqual(profile.skills, valid.skills);
   assert.equal(db.prepare('SELECT complete FROM profiles WHERE id=?').get('one:client').complete, 0);
-  db.exec("UPDATE profiles SET phone_verified=1 WHERE id='one:talent'");
-  await handleAuth(request('/api/profile', 'PUT', valid), env); assert.equal(db.prepare("SELECT phone_verified FROM profiles WHERE id='one:talent'").get().phone_verified, 1);
-  await handleAuth(request('/api/profile', 'PUT', { ...valid, phone: '+919876543211' }), env); assert.equal(db.prepare("SELECT phone_verified FROM profiles WHERE id='one:talent'").get().phone_verified, 0); db.close();
+  await handleAuth(request('/api/profile', 'PUT', { ...valid, phone: '+919876543211' }), env);
+  assert.equal((await (await handleAuth(request('/api/me'), env)).json()).profile.phone, '+919876543211'); db.close();
 });
 test('logout revokes the stored session and expires its secure cookie', async () => {
   const { db, env, request } = await setup(); const response = await handleAuth(request('/api/auth/logout', 'POST', {}), env);
   assert.match(response.headers.get('set-cookie'), /Secure; HttpOnly; SameSite=Lax; Max-Age=0/);
   assert.equal((await handleAuth(request('/api/me'), env)).status, 401); db.close();
-});
-test('SMS fails closed without provider configuration', async () => {
-  const { db, env, request } = await setup();
-  assert.equal((await handleAuth(request('/api/phone/send', 'POST', {}), env)).status, 503);
-  assert.equal((await handleAuth(request('/api/phone/verify', 'POST', { code: '123456' }), env)).status, 503); db.close();
-});
-test('SMS cooldown, invalid codes, expiry, ownership and successful verification', async () => {
-  const { db, env, request } = await setup(); Object.assign(env, { TWILIO_ACCOUNT_SID: 'test', TWILIO_AUTH_TOKEN: 'test', TWILIO_VERIFY_SERVICE_SID: 'test' });
-  await handleAuth(request('/api/profile', 'PUT', valid), env);
-  const original = globalThis.fetch; let approved = false;
-  globalThis.fetch = async url => Response.json(String(url).endsWith('/Verifications') ? { sid: 'test-sid', status: 'pending' } : { status: approved ? 'approved' : 'pending' });
-  try {
-    assert.equal((await handleAuth(request('/api/phone/send', 'POST', {}), env)).status, 200);
-    assert.equal((await handleAuth(request('/api/phone/send', 'POST', {}), env)).status, 429);
-    assert.equal((await handleAuth(request('/api/phone/verify', 'POST', { code: '123456' }), env)).status, 400);
-    assert.equal(db.prepare("SELECT phone_verified FROM profiles WHERE id='one:talent'").get().phone_verified, 0);
-    approved = true; assert.equal((await handleAuth(request('/api/phone/verify', 'POST', { code: '654321' }), env)).status, 200);
-    assert.equal(db.prepare("SELECT phone_verified FROM profiles WHERE id='one:talent'").get().phone_verified, 1);
-    assert.equal((await handleAuth(request('/api/phone/verify', 'POST', { code: '654321' }), env)).status, 400);
-    db.prepare('INSERT INTO phone_challenges VALUES (?, ?, ?, ?, ?)').run('one:talent', valid.phone, 'expired', 0, 0);
-    assert.equal((await handleAuth(request('/api/phone/verify', 'POST', { code: '654321' }), env)).status, 400);
-    db.exec('UPDATE phone_challenges SET expires_at=9999999999999, attempts=5');
-    assert.equal((await handleAuth(request('/api/phone/verify', 'POST', { code: '654321' }), env)).status, 400);
-  } finally { globalThis.fetch = original; db.close(); }
 });

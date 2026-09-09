@@ -7,7 +7,7 @@ panel.querySelector('.demo-note')?.remove();
 panel.querySelector('.auth-panel-header p').textContent = 'Use your Google account, then complete your Pluto profile.';
 const section = document.createElement('section');
 section.className = 'auth-methods';
-section.innerHTML = `<div class="google-signin-shell"><div id="google-button"></div></div><p id="login-status" role="status" aria-live="polite">Preparing secure sign-in…</p><button class="secondary-button" id="retry-login" type="button" hidden>Try again</button><p class="phone-help">Your name and email come from Google. Add your date of birth, education, phone number, and skills after sign-in. Phone verification is available from your profile when SMS service is enabled.</p>`;
+section.innerHTML = `<div class="google-signin-shell"><div id="google-button"></div></div><p id="login-status" role="status" aria-live="polite">Preparing secure sign-in…</p><button class="secondary-button" id="retry-login" type="button" hidden>Try again</button><p class="phone-help">Your name and email come from Google. Add your date of birth, education, phone number, and skills after sign-in.</p>`;
 panel.querySelector('.auth-panel-header').after(section);
 const status = section.querySelector('#login-status');
 const retry = section.querySelector('#retry-login');
