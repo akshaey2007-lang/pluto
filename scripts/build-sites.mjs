@@ -1,6 +1,7 @@
 import { copyFile, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { build } from 'esbuild';
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const outputRoot = path.join(projectRoot, 'dist');
@@ -21,6 +22,10 @@ const sourceFiles = [
   'styles.css',
   'signal-public.css',
   'workspace.js',
+  'account.mjs',
+  'account.css',
+  'account-options.mjs',
+  'login.mjs',
   'workspace.css',
   'signal-desk.css',
   'assets/pluto-logo-transparent.png',
@@ -36,6 +41,7 @@ const mimeTypes = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
+  '.mjs': 'text/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
   '.png': 'image/png',
   '.svg': 'image/svg+xml',
@@ -73,7 +79,8 @@ for (const file of deployedFiles) {
   };
 }
 
-const workerSource = `const files = ${JSON.stringify(manifest)};
+const workerSource = `import { handleAuth, currentProfile } from './auth-server.mjs';
+const files = ${JSON.stringify(manifest)};
 
 function decodeBase64(value) {
   const binary = atob(value);
@@ -83,7 +90,9 @@ function decodeBase64(value) {
 }
 
 export default {
-  async fetch(request) {
+  async fetch(request, env) {
+    const api = await handleAuth(request, env);
+    if (api) return api;
     if (request.method !== 'GET' && request.method !== 'HEAD') {
       return new Response('Method not allowed', { status: 405, headers: { Allow: 'GET, HEAD' } });
     }
@@ -98,12 +107,20 @@ export default {
 
     if (pathname === '/') pathname = '/index.html';
     if (pathname.endsWith('/')) pathname += 'index.html';
+    if (pathname === '/talent-dashboard.html' || pathname === '/client-dashboard.html') {
+      const role = pathname.startsWith('/talent') ? 'talent' : 'client';
+      let profile;
+      try { profile = await currentProfile(request, env); }
+      catch { return new Response('Account service unavailable. Please try again.', { status: 503, headers: { 'Cache-Control': 'no-store' } }); }
+      if (!profile) return new Response(null, { status: 302, headers: { Location: '/' + role + '-login.html', 'Cache-Control': 'no-store' } });
+      if (profile.role !== role) return new Response(null, { status: 302, headers: { Location: '/' + profile.role + '-dashboard.html', 'Cache-Control': 'no-store' } });
+    }
     const file = files[pathname];
     if (!file) return new Response('Not found', { status: 404 });
 
     const headers = {
       'Content-Type': file.contentType,
-      'Cache-Control': pathname.endsWith('.html') ? 'no-store' : 'public, max-age=3600',
+      'Cache-Control': 'no-store',
       'X-Content-Type-Options': 'nosniff',
     };
     return new Response(request.method === 'HEAD' ? null : decodeBase64(file.body), { status: 200, headers });
@@ -114,6 +131,6 @@ export default {
 const serverDirectory = path.join(outputRoot, 'server');
 await rm(serverDirectory, { recursive: true, force: true });
 await mkdir(serverDirectory, { recursive: true });
-await writeFile(path.join(serverDirectory, 'index.js'), workerSource, 'utf8');
+await build({ stdin: { contents: workerSource, resolveDir: projectRoot, sourcefile: 'pluto-worker.mjs' }, bundle: true, format: 'esm', platform: 'browser', target: 'es2022', outfile: path.join(serverDirectory, 'index.js') });
 
 console.log(`Prepared ${Object.keys(manifest).length} Pluto routes and assets for Sites.`);

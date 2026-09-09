@@ -6,10 +6,18 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "build": "vite build && node scripts/build-sites.mjs"
+    "build": "vite build && node scripts/build-sites.mjs",
+    "test": "node --test tests/accounts.test.mjs",
+    "db:generate": "drizzle-kit generate"
   },
   "devDependencies": {
     "@openai/sites-vite-plugin": "^0.2.0",
+    "drizzle-kit": "^0.31.10",
+    "esbuild": "^0.28.2",
     "vite": "^8.2.2"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.45.2",
+    "jose": "^6.2.12"
   }
 }
