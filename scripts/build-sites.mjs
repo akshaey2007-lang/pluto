@@ -6,6 +6,9 @@ import { build } from 'esbuild';
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const outputRoot = path.join(projectRoot, 'dist');
 
+await rm(outputRoot, { recursive: true, force: true });
+await mkdir(outputRoot, { recursive: true });
+
 const sourceFiles = [
   'index.html',
   'how-it-works.html',
