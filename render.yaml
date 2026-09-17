@@ -1,7 +1,8 @@
 services:
   - type: web
-    name: pluto
+    name: pluto-staging
     runtime: node
+    plan: free
     buildCommand: npm ci && npm run build
     startCommand: npm start
     healthCheckPath: /api/health
@@ -10,7 +11,7 @@ services:
         value: production
       - key: GOOGLE_CLIENT_ID
         value: 922402174418-9vcvmgb1u6al78delh4u9j482ulrtqc2.apps.googleusercontent.com
-      - key: ADMIN_EMAIL
-        sync: false
       - key: DATABASE_URL
-        sync: false
+        fromDatabase:
+          name: pluto-staging-db
+          property: connectionString
