@@ -21,7 +21,7 @@ For local Google sign-in, add `http://localhost:3000` to the OAuth client's **Au
 
 ## Render deployment
 
-The root `render.yaml` configures a **staging** Node web service and connects it to the existing `pluto-staging-db` Render database without writing its credentials into Git. Connect this GitHub repository in Render as a Blueprint. Alternatively, create a Web Service with build command `npm ci && npm run build`, start command `npm start`, health check `/api/health`, and `DATABASE_URL` set to a PostgreSQL internal connection string. Use the final Render URL as an Authorized JavaScript origin in Google Cloud, then test both client and talent sign-in.
+The root `render.yaml` configures a **staging** Node web service in Singapore, alongside the existing `pluto-staging-db` Render database, without writing its credentials into Git. Connect this GitHub repository in Render as a Blueprint. Alternatively, create a Web Service with build command `npm ci && npm run build`, start command `npm start`, health check `/api/health`, and `DATABASE_URL` set to a PostgreSQL internal connection string. Use the final Render URL as an Authorized JavaScript origin in Google Cloud, then test both client and talent sign-in.
 
 Render's free PostgreSQL option expires after 30 days and is not suitable for a production marketplace. The staging database created on September 17, 2026 expires on October 17, 2026 unless upgraded. Choose a durable database plan deliberately before inviting real users. The deployment should remain a staging preview until legal pages, moderation process, payment flow, and end-to-end testing are complete. The existing GitHub Pages/static deployment cannot run the Node API.
 
