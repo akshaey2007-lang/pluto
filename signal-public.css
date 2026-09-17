@@ -53,3 +53,28 @@ img[src$="pluto-logo-transparent.png"] { filter:brightness(0) saturate(100%) inv
 .site-footer .footer-bottom { color: #8f97a2; border-color: #353a42; }
 .site-footer .footer-bottom a { color: #f4c945; }
 .site-footer a:hover { color: #f4c945; }
+
+/* Editorial imagery and interaction layer */
+body[data-page="home"] .page-hero{position:relative;isolation:isolate;width:min(1380px,calc(100% - 32px));min-height:680px;margin:28px auto 10px;padding:clamp(32px,5vw,76px);gap:clamp(28px,4vw,64px);color:#fff;border:1px solid #262a2e;background:#1b1e20 url('assets/pluto-studio-hero.png') center/cover no-repeat;overflow:hidden}
+body[data-page="home"] .page-hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(14,16,18,.92),rgba(14,16,18,.82) 42%,rgba(14,16,18,.37) 76%,rgba(14,16,18,.22))}
+body[data-page="home"] .page-hero h1{font-size:clamp(52px,5.9vw,88px);max-width:680px;text-wrap:balance}
+body[data-page="home"] .page-hero .gradient-text{color:#f4c945}
+body[data-page="home"] .page-hero .hero-description{color:#e7e7e4;max-width:580px;font-size:18px}
+body[data-page="home"] .page-hero .secondary-button{background:rgba(23,26,29,.68);border:1px solid rgba(255,255,255,.55);color:#fff}
+body[data-page="home"] .page-hero .secondary-button:hover{background:#fff;color:#171a1f}
+body[data-page="home"] .platform-card{min-height:460px;background:rgba(255,255,255,.93);color:#171a1f;border:1px solid rgba(255,255,255,.8);box-shadow:0 22px 65px rgba(0,0,0,.23);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+body[data-page="home"] .platform-card .platform-metrics div{background:#fff}
+.info-card,.role-card,.talent-card{transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.info-card:hover,.role-card:hover,.talent-card:hover{transform:translateY(-5px);box-shadow:0 20px 42px rgba(17,19,22,.12);border-color:#b8b7b2}
+.cta-panel{position:relative;isolation:isolate;overflow:hidden;color:#fff!important;background:#1c1d1d url('assets/pluto-workspace-background.png') center/cover no-repeat!important}
+.cta-panel::before{content:"";position:absolute;inset:0;z-index:-1;background:rgba(14,16,18,.72)}
+.cta-panel p{color:#e4e5e2!important}
+.cta-panel .secondary-button{background:transparent;color:#fff;border-color:#fff}
+.cta-panel .secondary-button:hover{background:#fff;color:#171a1f}
+.auth-intro,.auth-intro.client{background:#1d1f20 url('assets/pluto-workspace-background.png') 66% center/cover no-repeat;color:#fff;position:relative;isolation:isolate;overflow:hidden}
+.auth-intro::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(15,17,19,.89),rgba(15,17,19,.72))}
+.auth-intro.client p{color:#fff}
+@media(max-width:980px){body[data-page="home"] .page-hero{grid-template-columns:1fr;background-position:62% center}body[data-page="home"] .platform-card{max-width:620px;margin:0}}
+@media(max-width:780px){body[data-page="home"] .page-hero{width:calc(100% - 20px);min-height:0;margin:16px auto 0;padding:30px 22px;gap:30px}body[data-page="home"] .page-hero::before{background:rgba(14,16,18,.77)}body[data-page="home"] .page-hero h1{font-size:clamp(42px,11vw,62px)}body[data-page="home"] .platform-card{min-height:0}body[data-page="home"] .page-hero .hero-description{font-size:16px}.cta-panel{background-position:64% center!important}}
+@media(max-width:520px){body[data-page="home"] .page-hero{padding:28px 18px}body[data-page="home"] .page-hero h1{font-size:clamp(40px,12vw,52px)}body[data-page="home"] .platform-card{padding:18px}}
+@media(prefers-reduced-motion:reduce){.info-card,.role-card,.talent-card{transition:none!important;transform:none!important}}

@@ -42,7 +42,7 @@ if (header) {
         <div class="nav-dropdown">
           <button class="primary-button compact nav-trigger" type="button" aria-expanded="false">Sign up</button>
           <div class="nav-popover nav-popover-right liquid" role="menu">
-            <a href="talent-signup.html" role="menuitem"><b>Join as talent</b><span>Get verified and receive fair opportunities</span></a>
+            <a href="talent-signup.html" role="menuitem"><b>Join as talent</b><span>Build a profile and find opportunities</span></a>
             <a href="client-signup.html" role="menuitem"><b>Join as a client</b><span>Build a focused shortlist for your project</span></a>
           </div>
         </div>
@@ -56,11 +56,11 @@ if (footer) {
     <div class="footer-primary">
       <div class="footer-brand-block">
         <a class="footer-brand" href="index.html"><img src="assets/pluto-logo-transparent.png" alt="Pluto"></a>
-        <p>Pluto connects verified independent specialists with clearly scoped projects and funded milestones.</p>
+        <p>Pluto connects independent specialists and clients around clear projects, thoughtful proposals, and shared workrooms.</p>
         <div class="footer-trust" aria-label="Platform commitments">
           <span>Free for talent to apply</span>
           <span>Focused client shortlists</span>
-          <span>Funded before work begins</span>
+          <span>10% client service fee</span>
         </div>
       </div>
       <div class="footer-column">
@@ -91,8 +91,8 @@ if (footer) {
     </div>
     <div class="footer-bottom">
       <span>© 2026 Pluto</span>
-      <span>Professional marketplace prototype</span>
-      <a href="protection.html">Clear scope · Funded milestones · Protected delivery</a>
+      <span>Payments are not yet active</span>
+      <a href="protection.html">Clear scope · Shared workrooms · Transparent pricing</a>
     </div>`;
 }
 
