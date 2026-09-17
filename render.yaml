@@ -10,6 +10,8 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      - key: PLUTO_STAGING
+        value: "1"
       - key: GOOGLE_CLIENT_ID
         value: 922402174418-9vcvmgb1u6al78delh4u9j482ulrtqc2.apps.googleusercontent.com
       - key: DATABASE_URL

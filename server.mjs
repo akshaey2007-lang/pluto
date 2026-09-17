@@ -40,6 +40,7 @@ const server = http.createServer(async (req, res) => {
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.setHeader('X-Frame-Options', 'DENY');
   res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  if (process.env.PLUTO_STAGING === '1') res.setHeader('X-Robots-Tag', 'noindex, nofollow');
   try {
     if (pathname.startsWith('/api/')) {
       const response = await handleApi(await webRequest(req, new URL(req.url, origin)));

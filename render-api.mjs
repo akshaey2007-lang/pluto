@@ -107,6 +107,7 @@ export async function handleApi(request, db = database()) {
       return json({ clientId: process.env.GOOGLE_CLIENT_ID || '', nonce }, 200, { 'Set-Cookie': cookie(NONCE, nonce, 600) });
     }
     if (path === '/api/auth/google' && request.method === 'POST') {
+      await rateLimit(db, `login:${await hash(request.headers.get('x-forwarded-for') || 'local')}`, 30, 600000);
       const data = await body(request);
       if (!['talent', 'client'].includes(data.role) || typeof data.credential !== 'string') failure('Invalid sign-in request.');
       const nonce = cookieValue(request, NONCE);
@@ -172,6 +173,7 @@ export async function handleApi(request, db = database()) {
     }
     if (path === '/api/projects' && request.method === 'POST') {
       roleOnly(profile, 'client'); if (!profile.complete) failure('Complete your profile before posting a project.');
+      await rateLimit(db, `projects:${profile.id}`, 20, oneDay);
       const raw = await body(request); const data = validateProject(raw); const status = raw.status === 'draft' ? 'draft' : 'open'; const id = crypto.randomUUID(); const now = Date.now();
       await db.query(`INSERT INTO projects(id,client_profile_id,title,description,category,skills,budget_paise,deadline,deliverables,status,created_at,updated_at)
         VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$11)`, [id, profile.id, data.title, data.description, data.category, JSON.stringify(data.skills), data.budget_paise, data.deadline, data.deliverables, status, now]);
@@ -208,6 +210,7 @@ export async function handleApi(request, db = database()) {
       }
       if (request.method === 'POST') {
         roleOnly(profile, 'talent'); if (!profile.complete) failure('Complete your profile before proposing.');
+        await rateLimit(db, `proposals:${profile.id}`, 50, oneDay);
         if (project.status !== 'open') failure('This project is not accepting proposals.', 409);
         if (project.client_user_id === profile.user_id) failure('You cannot propose to your own project.', 403);
         const data = validateProposal(await body(request)); const id = crypto.randomUUID(); const now = Date.now();
@@ -292,6 +295,7 @@ export async function handleApi(request, db = database()) {
     const messagesMatch = path.match(/^\/api\/contracts\/([^/]+)\/messages$/);
     if (messagesMatch && request.method === 'POST') {
       const contract = await contractFor(db, messagesMatch[1], profile);
+      await rateLimit(db, `messages:${profile.id}`, 250, oneDay);
       const data = await body(request); const message = text(data.body, 1, 2000, 'Message');
       await db.query('INSERT INTO messages(id,contract_id,sender_profile_id,body,created_at) VALUES($1,$2,$3,$4,$5)', [crypto.randomUUID(), contract.id, profile.id, message, Date.now()]);
       const recipient = profile.id === contract.client_profile_id ? contract.talent_profile_id : contract.client_profile_id;
@@ -310,6 +314,7 @@ export async function handleApi(request, db = database()) {
       return json({ ok: true });
     }
     if (path === '/api/reports' && request.method === 'POST') {
+      await rateLimit(db, `reports:${profile.id}`, 10, oneDay);
       const data = await body(request); const reason = text(data.reason, 3, 80, 'Reason'); const details = text(data.details, 10, 1500, 'Details');
       const projectId = data.projectId && isUuid(data.projectId) ? data.projectId : null;
       if (data.projectId && !projectId) failure('Project not found.', 404);

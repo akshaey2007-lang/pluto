@@ -7,7 +7,7 @@ const menu = document.querySelector('.mobile-sidebar-toggle');
 const state = { profile: null, admin: false, detail: null, search: '', skill: '' };
 const labels = { overview: 'Overview', projects: 'Projects', opportunities: 'Opportunities', matches: 'Talent matches', proposals: 'Proposals', work: 'Active work', messages: 'Messages', payments: 'Payments', earnings: 'Earnings', profile: 'My profile', settings: 'Settings', notifications: 'Notifications', admin: 'Administration' };
 const esc = value => String(value ?? '').replace(/[&<>"']/g, x => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[x]);
-const money = paise => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(Number(paise || 0) / 100);
+const money = paise => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(Number(paise || 0) / 100);
 const date = value => value ? new Date(typeof value === 'string' && /^\d{4}-\d{2}-\d{2}/.test(value) ? `${value.slice(0, 10)}T00:00:00` : Number(value)).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Not set';
 const status = value => `<span class="mp-status mp-${esc(value)}">${esc(String(value).replaceAll('_', ' '))}</span>`;
 const tags = values => (values || []).map(x => `<span class="mp-tag">${esc(x)}</span>`).join('');
